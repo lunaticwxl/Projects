@@ -1,0 +1,58 @@
+{
+  // 以下为必写
+  "manifest_version": 2, // 必须为2，1号版本已弃用
+  "name": "demo1", // 扩展程序名称
+  "version": "0.01", // 版本号
+  
+  // 以下为选填
+  
+  // 推荐
+  "description": "描述",
+  "icons": {
+    "16": "icons/icon_16.png",
+    "48": "icons/icon_48.png",
+    "64": "icons/icon_64.png",
+    "128": "icons/icon_128.png"
+  },
+  "author": "wxl",
+  
+  // 根据自己使用的权限填写
+  "permissions": [
+    // 例如
+    "tabs",
+    "storage",
+    // 如果会在js中请求外域API或者资源，则要把外域链接加入
+    "http://*/*",
+    //右键菜单
+    "contextMenus"
+  ],
+  
+  // options_page，指右键点击右上角里的插件logo时，弹出列表中的“选项”是否可点，以及在可以点击时，左键点击后打开的页面
+  "options_page": "html/options.html",
+  
+  // browser_action，左键点击右上角插件logo时，弹出的popup框。不填此项则点击logo不会有用
+  "browser_action": {
+    "default_icon": {
+      "38": "icons/icon_38.png"
+    },
+    "default_popup": "html/popup.html", // popup页面，其实就是普通的html
+    "default_title" : "保存到cliper"
+  },
+  
+  // background，后台执行的文件，一般只需要指定js即可。会在浏览器打开后全局范围内后台运行
+  "background": {
+    "scripts": ["js/vendor/jquery-3.2.1.js", "js/menu.js"],
+    // persistent代表“是否持久”。如果是一个单纯的全局后台js，需要一直运行，则不需配置persistent（或者为true）。当配置为false时转变为事件js，依旧存在于后台，在需要时加载，空闲时卸载
+    "persistent": false
+  },
+  
+  // content_scripts，在各个浏览器页面里运行的文件，可以获取到当前页面的上下文DOM
+  "content_scripts": [
+    {
+      // matches 匹配 content_scripts 可以在哪些页面运行
+      "matches" : ["http://*/*", "https://*/*"],
+      "js": ["js/vendor/jquery-3.2.1.js","js/conscript.js"],//"js/vendor/jquery-3.1.1.min.js", "js/vendor/keyboard.min.js", "js/selection.js", "js/notification.js"
+      "css": ["css/conCss.css"]//"css/notification.css"
+    }
+  ]
+}
